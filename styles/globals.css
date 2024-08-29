@@ -80,3 +80,8 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+[data-overlay-container="true"] {
+  height: 100%;
+  width: 100%;
+}

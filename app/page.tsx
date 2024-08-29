@@ -4,6 +4,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { LoginButton } from "@/components/auth/login-button";
 import { Metadata } from "next";
+import { ModeToggle } from "@/components/ui/theme-button";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -25,10 +26,11 @@ const Home = () => {
         <p className="italic text-muted-foreground">
           &quot;User Identity Check Service&quot;
         </p>
-        <div>
+        <div className="space-x-4 items-center">
           <LoginButton>
             <Button size={"lg"}>Sign in</Button>
           </LoginButton>
+          <ModeToggle />
         </div>
       </div>
     </main>

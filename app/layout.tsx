@@ -4,6 +4,9 @@ import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Providers } from "./providers";
 import { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
+import Navbar from "../components/Navbar";
 export interface LayoutProps {
   children: React.ReactNode;
 }
@@ -18,25 +21,29 @@ export const metadata: Metadata = {
   description: "Auth",
 };
 
-export default function RootLayout({ children }: LayoutProps) {
+export default async function RootLayout({ children }: LayoutProps) {
+  const session = await auth();
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head />
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        <Providers
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
+    <SessionProvider session={session}>
+      <html lang="en" suppressHydrationWarning>
+        <head />
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.variable
+          )}
         >
-          {children}
-        </Providers>
-      </body>
-    </html>
+          <Providers
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Navbar />
+            {children}
+          </Providers>
+        </body>
+      </html>
+    </SessionProvider>
   );
 }
